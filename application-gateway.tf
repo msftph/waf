@@ -4,8 +4,8 @@ resource "azurerm_application_gateway" "network" {
   location            = azurerm_resource_group.example.location
 
   sku {
-    name     = "Standard_Small"
-    tier     = "Standard"
+    name     = "WAF_v2"
+    tier     = "WAF_v2"
     capacity = 2
   }
 
@@ -50,5 +50,15 @@ resource "azurerm_application_gateway" "network" {
     http_listener_name         = local.listener_name
     backend_address_pool_name  = local.backend_address_pool_name
     backend_http_settings_name = local.http_setting_name
+  }
+
+  waf_configuration {
+    enabled                  = true
+    file_upload_limit_mb     = 100
+    firewall_mode            = "Detection"
+    max_request_body_size_kb = 128
+    request_body_check       = true
+    rule_set_type            = "OWASP"
+    rule_set_version         = "3.0"
   }
 }

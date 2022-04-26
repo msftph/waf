@@ -1,0 +1,1 @@
+az webapp up -n linuxabc123 -g FrontDoorExampleResourceGroup --os-type "Linux" --sku F1 --runtime "DOTNET:6.0"
